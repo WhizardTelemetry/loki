@@ -941,13 +941,13 @@ gateway:
   terminationGracePeriodSeconds: 30
   # -- Affinity for gateway pods.
   # @default -- Hard node anti-affinity
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app.kubernetes.io/component: gateway
-          topologyKey: kubernetes.io/hostname
+  affinity: {}
+  #  podAntiAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #      - labelSelector:
+  #          matchLabels:
+  #            app.kubernetes.io/component: gateway
+  #        topologyKey: kubernetes.io/hostname
   # -- DNS config for gateway pods
   dnsConfig: {}
   # -- Node selector for gateway pods
@@ -1386,13 +1386,13 @@ write:
   terminationGracePeriodSeconds: 300
   # -- Affinity for write pods.
   # @default -- Hard node anti-affinity
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app.kubernetes.io/component: write
-          topologyKey: kubernetes.io/hostname
+  affinity: {}
+  #  podAntiAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #      - labelSelector:
+  #          matchLabels:
+  #            app.kubernetes.io/component: write
+  #        topologyKey: kubernetes.io/hostname
   # -- DNS config for write pods
   dnsConfig: {}
   # -- Node selector for write pods
@@ -1498,13 +1498,13 @@ read:
   terminationGracePeriodSeconds: 30
   # -- Affinity for read pods.
   # @default -- Hard node anti-affinity
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app.kubernetes.io/component: read
-          topologyKey: kubernetes.io/hostname
+  affinity: {}
+  #  podAntiAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #      - labelSelector:
+  #          matchLabels:
+  #            app.kubernetes.io/component: read
+  #        topologyKey: kubernetes.io/hostname
   # -- DNS config for read pods
   dnsConfig: {}
   # -- Node selector for read pods
@@ -1601,13 +1601,13 @@ backend:
   terminationGracePeriodSeconds: 300
   # -- Affinity for backend pods.
   # @default -- Hard node anti-affinity
-  affinity:
-    podAntiAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        - labelSelector:
-            matchLabels:
-              app.kubernetes.io/component: backend
-          topologyKey: kubernetes.io/hostname
+  affinity: {}
+  #  podAntiAffinity:
+  #    requiredDuringSchedulingIgnoredDuringExecution:
+  #      - labelSelector:
+  #          matchLabels:
+  #            app.kubernetes.io/component: backend
+  #        topologyKey: kubernetes.io/hostname
   # -- DNS config for backend pods
   dnsConfig: {}
   # -- Node selector for backend pods
