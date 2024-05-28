@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vector-agent-logs-sink-loki
+  namespace: kubesphere-logging-system
+  labels:
+    logging.whizard.io/component: "logs"
+    logging.whizard.io/vector-role: Agent
+    logging.whizard.io/enable: "true"
+stringData:
+  sink.yaml: |
+    sinks:
+      loki-logs:
+        type: loki
+        inputs:
+        - kube_logs_remapped
+        - systemd_logs_remapped
+        endpoint: http://loki-gateway.loki.svc
+        path: /loki/api/v1/push
+        tenant_id: "{{ .cluster }}"
+        out_of_order_action: accept
+        encoding:
+          codec: json
+        request:
+          retry_attempts: 5
+        labels: 
+          cluster: "{{ .cluster }}"
+          workspace: "{{ .kubernetes.workspace }}"
+          node: "{{ .kubernetes.node_name }}"
+          namespace: "{{ .kubernetes.namespace_name }}"
+          pod: "{{ .kubernetes.pod_name }}"
+          container: "{{ .kubernetes.container_name }}"
+          container_id: "{{ .kubernetes.docker_id }}"
