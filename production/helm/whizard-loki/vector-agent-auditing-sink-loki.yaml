@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vector-agent-auditing-sink-loki
+  namespace: kubesphere-logging-system
+  labels:
+    logging.whizard.io/component: "auditing"
+    logging.whizard.io/vector-role: Agent
+    logging.whizard.io/enable: "true"
+stringData:
+  sink.yaml: |
+    sinks:
+      loki-auditing:
+        type: loki
+        inputs:
+        - auditing_remapped
+        endpoint: http://loki-gateway.loki.svc
+        path: /loki/api/v1/push
+        tenant_id: whizard-auditing-ks
+        out_of_order_action: accept
+        encoding:
+          codec: json
+        request:
+          retry_attempts: 5
+        labels: 
+          type: auditing
+          verb: "{{ .Verb }}"
+          cluster: "{{ .cluster }}"
+          workspace: "{{ .Workspace }}"
+          namespace: "{{ .ObjectRef.Namespace }}"
+          resource: "{{ .ObjectRef.Resource }}"
+          user: "{{ .User.Username }}"
