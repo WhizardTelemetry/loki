@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: vector-agent-events
+  namespace: kubesphere-logging-system
+  labels:
+    logging.whizard.io/vector-role: Agent
+    logging.whizard.io/enable: "true"
+stringData:
+  events.yaml: |
+    sources:
+      kube_events:
+        type: kubernetes_logs
+        extra_label_selector: "app.kubernetes.io/name=kube-events-exporter"
+    transforms:
+      kube_events_remapped:
+        drop_on_error: true
+        inputs:
+        - kube_events
+        source: |-
+          . = parse_json!(.message)
+          if .lastTimestamp == null { .lastTimestamp = .eventTime }
+          .timestamp=parse_timestamp!(.lastTimestamp, format: "%+")
+          .@timestamp=to_unix_timestamp(.timestamp)
+          .timestamp=format_timestamp!(.timestamp, format: "%+", timezone: "local")
+          del(.metadata)
+          if !exists(.involvedObject.namespace) { .involvedObject.namespace = "" }
+          if !exists(.involvedObject.reportingComponent) { .involvedObject.reportingComponent = "" }
+        type: remap

@@ -28,6 +28,21 @@ loki:
     max_concurrent: 4
 gateway:
   verboseLogging: false
+  service:
+    # -- Port of the gateway service
+    port: 80
+    # -- Type of the gateway service
+    type: NodePort
+    # -- ClusterIP of the gateway service
+    clusterIP: null
+    # -- (int) Node port if service type is NodePort
+    nodePort: 31080
+    # -- Load balancer IPO address if service type is LoadBalancer
+    loadBalancerIP: null
+    # -- Annotations for the gateway service
+    annotations: {}
+    # -- Labels for gateway service
+    labels: {}
 deploymentMode: SimpleScalable
 backend:
   affinity: {}
@@ -44,6 +59,7 @@ read:
   affinity: {}
   replicas: 2
   extraArgs:
+    - -querier.multi-tenant-queries-enabled=true
     - -log.level=warn
 write:
   affinity: {}

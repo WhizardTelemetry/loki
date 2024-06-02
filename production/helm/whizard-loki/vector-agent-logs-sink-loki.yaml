@@ -17,13 +17,14 @@ stringData:
         - systemd_logs_remapped
         endpoint: http://loki-gateway.loki.svc
         path: /loki/api/v1/push
-        tenant_id: "{{ .cluster }}"
+        tenant_id: whizard-logging-ks 
         out_of_order_action: accept
         encoding:
           codec: json
         request:
           retry_attempts: 5
         labels: 
+          type: logs
           cluster: "{{ .cluster }}"
           workspace: "{{ .kubernetes.workspace }}"
           node: "{{ .kubernetes.node_name }}"
