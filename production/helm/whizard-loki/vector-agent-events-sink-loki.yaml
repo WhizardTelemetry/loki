@@ -23,7 +23,6 @@ stringData:
         request:
           retry_attempts: 5
         labels: 
-          type: events
           cluster: "{{ .cluster }}"
           event_type: "{{ .type }}"
           kind: "{{ .involvedObject.kind }}"

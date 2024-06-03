@@ -24,7 +24,6 @@ stringData:
         request:
           retry_attempts: 5
         labels: 
-          type: logs
           cluster: "{{ .cluster }}"
           workspace: "{{ .kubernetes.workspace }}"
           node: "{{ .kubernetes.node_name }}"

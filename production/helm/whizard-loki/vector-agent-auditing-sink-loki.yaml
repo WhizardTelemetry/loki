@@ -23,7 +23,6 @@ stringData:
         request:
           retry_attempts: 5
         labels: 
-          type: auditing
           verb: "{{ .Verb }}"
           cluster: "{{ .cluster }}"
           workspace: "{{ .Workspace }}"
