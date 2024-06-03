@@ -24,7 +24,7 @@ stringData:
           retry_attempts: 5
         labels: 
           cluster: "{{ .cluster }}"
-          event_type: "{{ .type }}"
+          type: "{{ .type }}"
           kind: "{{ .involvedObject.kind }}"
           namespace: "{{ .involvedObject.namespace }}"
           reported_by: "{{ .reportingComponent }}"
