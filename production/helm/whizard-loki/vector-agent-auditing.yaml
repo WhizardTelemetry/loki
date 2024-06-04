@@ -114,7 +114,6 @@ stringData:
           if exists(.RequestObject) { .RequestObject = encode_json(.RequestObject) }
           if exists(.ResponseObject) { .ResponseObject = encode_json(.ResponseObject) }
           .timestamp = parse_timestamp!(.RequestReceivedTimestamp, format: "%+")
-          .@timestamp=to_unix_timestamp(.timestamp)
           .timestamp = format_timestamp!(.timestamp, format: "%+", timezone: "local")
           .RequestReceivedTimestamp = .timestamp
           .StageTimestamp = parse_timestamp!(.StageTimestamp, format: "%+")

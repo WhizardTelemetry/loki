@@ -9,12 +9,20 @@ metadata:
     logging.whizard.io/enable: "true"
 stringData:
   sink.yaml: |
+    transforms:
+      loki_logs_remapped:
+        type: remap
+        drop_on_error: true
+        inputs:
+        - kube_logs_remapped
+        - systemd_logs_remapped
+        source: |-
+          .timestamp=parse_timestamp!(.timestamp, format: "%+")
     sinks:
       loki-logs:
         type: loki
         inputs:
-        - kube_logs_remapped
-        - systemd_logs_remapped
+        - loki_logs_remapped
         endpoint: http://loki-gateway.loki.svc
         path: /loki/api/v1/push
         tenant_id: whizard-logging-ks 
@@ -30,4 +38,3 @@ stringData:
           namespace: "{{ .kubernetes.namespace_name }}"
           pod: "{{ .kubernetes.pod_name }}"
           container: "{{ .kubernetes.container_name }}"
-          container_id: "{{ .kubernetes.docker_id }}"
