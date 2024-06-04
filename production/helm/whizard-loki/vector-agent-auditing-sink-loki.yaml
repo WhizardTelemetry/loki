@@ -9,11 +9,19 @@ metadata:
     logging.whizard.io/enable: "true"
 stringData:
   sink.yaml: |
+    transforms:
+      loki_auditing_remapped:
+        type: remap
+        drop_on_error: true
+        inputs:
+        - auditing_remapped
+        source: |-
+          .timestamp=parse_timestamp!(.timestamp, format: "%+")
     sinks:
       loki-auditing:
         type: loki
         inputs:
-        - auditing_remapped
+        - loki_auditing_remapped
         endpoint: http://loki-gateway.loki.svc
         path: /loki/api/v1/push
         tenant_id: whizard-auditing-ks
