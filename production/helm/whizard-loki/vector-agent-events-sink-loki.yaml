@@ -9,11 +9,19 @@ metadata:
     logging.whizard.io/enable: "true"
 stringData:
   sink.yaml: |
+    transforms:
+      loki_events_remapped:
+        type: remap
+        drop_on_error: true
+        inputs:
+        - kube_events_remapped
+        source: |-
+          .timestamp=parse_timestamp!(.timestamp, format: "%+")
     sinks:
       loki-events:
         type: loki
         inputs:
-        - kube_events_remapped
+        - loki_events_remapped
         endpoint: http://loki-gateway.loki.svc
         path: /loki/api/v1/push
         tenant_id: whizard-events-ks

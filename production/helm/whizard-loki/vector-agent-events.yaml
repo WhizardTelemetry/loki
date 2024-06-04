@@ -21,7 +21,6 @@ stringData:
           . = parse_json!(.message)
           if .lastTimestamp == null { .lastTimestamp = .eventTime }
           .timestamp=parse_timestamp!(.lastTimestamp, format: "%+")
-          .@timestamp=to_unix_timestamp(.timestamp)
           .timestamp=format_timestamp!(.timestamp, format: "%+", timezone: "local")
           del(.metadata)
           if !exists(.involvedObject.namespace) { .involvedObject.namespace = "" }
