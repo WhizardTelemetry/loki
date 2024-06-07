@@ -1,0 +1,408 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_WHIZARD_NOTIFICATION",
+      "label": "Whizard Notification",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "loki",
+      "pluginName": "Loki"
+    },
+    {
+      "name": "DS_WHIZARD_AUDITING",
+      "label": "Whizard Auditing",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "loki",
+      "pluginName": "Loki"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.4.1"
+    },
+    {
+      "type": "panel",
+      "id": "logs",
+      "name": "Logs",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "loki",
+      "name": "Loki",
+      "version": "1.0.0"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${DS_WHIZARD_NOTIFICATION}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${DS_WHIZARD_NOTIFICATION}"
+          },
+          "editorMode": "builder",
+          "expr": "{cluster=~\"$cluster\", namespace=~\"$namespace\", alerttype=~\"$alerttype\", alertname=~\"$alertname\", severity=~\"$severity\"} |~ `$keyword`",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Whizard Notification for KubeSphere",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "auto",
+            "jsonPaths": [
+              {
+                "path": ""
+              }
+            ],
+            "keepTime": false,
+            "replace": false,
+            "source": "Line"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {
+              "@timestamp": false,
+              "APIGroup": true,
+              "APIVersion": true,
+              "Level": true,
+              "Line": true,
+              "RequestReceivedTimestamp": false,
+              "RequestURI": true,
+              "ResourceName": true,
+              "ResponseCode": true,
+              "SourceIPs": true,
+              "Time": true,
+              "Workspace": true,
+              "alertname": true,
+              "alertname 1": true,
+              "alertname 2": false,
+              "alerttime": true,
+              "alerttype": true,
+              "alerttype 1": true,
+              "apiVersion": true,
+              "cluster": true,
+              "cluster 1": false,
+              "cluster 2": false,
+              "container": true,
+              "count": true,
+              "endsAt": false,
+              "eventTime": false,
+              "event_type": false,
+              "firstTimestamp": true,
+              "id": false,
+              "involvedObject": false,
+              "kind": true,
+              "kubernetes": false,
+              "labelTypes": false,
+              "labels": false,
+              "lastTimestamp": true,
+              "level": false,
+              "log": true,
+              "message": true,
+              "name": false,
+              "namespace": true,
+              "namespace 1": false,
+              "namespace 2": false,
+              "node": true,
+              "notificationTime": false,
+              "object.involvedObject.namespace": true,
+              "pod": true,
+              "reason": true,
+              "reason 1": false,
+              "reason 2": false,
+              "receiver": true,
+              "reported_by": true,
+              "reportingComponent": false,
+              "reportingInstance": true,
+              "resource": true,
+              "rule_id": false,
+              "rule_level": true,
+              "rule_type": false,
+              "service_name": false,
+              "severity": true,
+              "severity 1": true,
+              "source": false,
+              "startsAt": false,
+              "status": true,
+              "time": false,
+              "timestamp": false,
+              "tsNs": false,
+              "type": true,
+              "type 1": false,
+              "type 2": false,
+              "user": true,
+              "verb": true,
+              "workspace": true
+            },
+            "indexByName": {
+              "Line": 1,
+              "Time": 0,
+              "alertname": 8,
+              "alerttime": 11,
+              "alerttype": 12,
+              "cluster": 2,
+              "dept": 17,
+              "endsAt": 24,
+              "id": 7,
+              "labelTypes": 6,
+              "labels": 4,
+              "message": 10,
+              "name": 18,
+              "namespace": 3,
+              "node": 15,
+              "notificationTime": 14,
+              "receiver": 16,
+              "rule_group": 19,
+              "rule_id": 20,
+              "rule_level": 21,
+              "rule_type": 22,
+              "severity": 9,
+              "startsAt": 23,
+              "status": 13,
+              "timestamp": 25,
+              "tsNs": 5
+            },
+            "renameByName": {
+              "cluster 1": "",
+              "cluster 2": "",
+              "involvedObject.namespace": "",
+              "kubernetes": "",
+              "labels": "",
+              "object.involvedObject.namespace": "namespace",
+              "reported_by": "reportingComponent"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "logs"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": ".+",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_AUDITING}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "cluster",
+        "multi": true,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "label": "cluster",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_AUDITING}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "namespace",
+        "multi": true,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "label": "namespace",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".+",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_NOTIFICATION}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "alertname",
+        "multi": true,
+        "name": "alertname",
+        "options": [],
+        "query": {
+          "label": "alertname",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".+",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_NOTIFICATION}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "alerttype",
+        "multi": true,
+        "name": "alerttype",
+        "options": [],
+        "query": {
+          "label": "alerttype",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".+",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_NOTIFICATION}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "severity",
+        "multi": true,
+        "name": "severity",
+        "options": [],
+        "query": {
+          "label": "severity",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "keyword",
+        "multi": true,
+        "name": "keyword",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          }
+        ],
+        "query": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Whizard Notification for KubeSphere",
+  "uid": "edo1kgu1a0jcwe",
+  "version": 4,
+  "weekStart": ""
+}
