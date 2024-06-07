@@ -1,0 +1,422 @@
+{
+  "__inputs": [
+    {
+      "name": "DS_WHIZARD_EVENTS",
+      "label": "Whizard Events",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "loki",
+      "pluginName": "Loki"
+    }
+  ],
+  "__elements": {},
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "10.4.1"
+    },
+    {
+      "type": "panel",
+      "id": "logs",
+      "name": "Logs",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "loki",
+      "name": "Loki",
+      "version": "1.0.0"
+    }
+  ],
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": null,
+  "links": [],
+  "liveNow": true,
+  "panels": [
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "${DS_WHIZARD_EVENTS}"
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 1,
+      "options": {
+        "dedupStrategy": "none",
+        "enableLogDetails": true,
+        "prettifyLogMessage": false,
+        "showCommonLabels": false,
+        "showLabels": false,
+        "showTime": true,
+        "sortOrder": "Descending",
+        "wrapLogMessage": true
+      },
+      "pluginVersion": "10.4.1",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "${DS_WHIZARD_EVENTS}"
+          },
+          "editorMode": "builder",
+          "expr": "{cluster=~\"$cluster\", namespace=~\"$namespace\", type=~\"$type\", kind=~\"$kind\", reason=~\"$reason\", reported_by=~\"$reported_by\"} |~ `$keyword`",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Whizard Events for KubeSphere",
+      "transformations": [
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "json",
+            "jsonPaths": [
+              {
+                "path": "message"
+              },
+              {
+                "path": "count"
+              },
+              {
+                "path": "firstTimestamp"
+              },
+              {
+                "path": "lastTimestamp"
+              },
+              {
+                "path": "reportingInstance"
+              },
+              {
+                "alias": "name",
+                "path": "involvedObject.name"
+              },
+              {
+                "alias": "apiVersion",
+                "path": "involvedObject.apiVersion"
+              }
+            ],
+            "keepTime": false,
+            "replace": false,
+            "source": "Line"
+          }
+        },
+        {
+          "id": "extractFields",
+          "options": {
+            "format": "auto",
+            "jsonPaths": [
+              {
+                "path": ""
+              }
+            ],
+            "keepTime": false,
+            "replace": false,
+            "source": "labels"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {},
+            "includeByName": {
+              "@timestamp": false,
+              "Line": true,
+              "Time": true,
+              "apiVersion": true,
+              "cluster": true,
+              "cluster 1": false,
+              "cluster 2": false,
+              "container": true,
+              "count": true,
+              "eventTime": false,
+              "event_type": false,
+              "firstTimestamp": true,
+              "id": false,
+              "involvedObject": false,
+              "kind": true,
+              "kubernetes": false,
+              "labelTypes": false,
+              "labels": false,
+              "lastTimestamp": true,
+              "level": false,
+              "log": true,
+              "message": true,
+              "name": true,
+              "namespace": true,
+              "namespace 1": false,
+              "namespace 2": false,
+              "node": true,
+              "object.involvedObject.namespace": true,
+              "pod": true,
+              "reason": true,
+              "reason 1": false,
+              "reason 2": false,
+              "reported_by": true,
+              "reportingComponent": false,
+              "reportingInstance": true,
+              "service_name": false,
+              "source": false,
+              "time": false,
+              "tsNs": false,
+              "type": true,
+              "type 1": false,
+              "type 2": false,
+              "workspace": true
+            },
+            "indexByName": {
+              "Line": 1,
+              "Time": 0,
+              "apiVersion": 5,
+              "cluster": 2,
+              "count": 10,
+              "firstTimestamp": 11,
+              "id": 20,
+              "kind": 6,
+              "labelTypes": 19,
+              "labels": 17,
+              "lastTimestamp": 12,
+              "level": 16,
+              "message": 9,
+              "name": 7,
+              "namespace": 3,
+              "reason": 8,
+              "reported_by": 13,
+              "reportingInstance": 14,
+              "service_name": 15,
+              "tsNs": 18,
+              "type": 4
+            },
+            "renameByName": {
+              "cluster 1": "",
+              "cluster 2": "",
+              "involvedObject.namespace": "",
+              "kubernetes": "",
+              "labels": "",
+              "object.involvedObject.namespace": "namespace",
+              "reported_by": "reportingComponent"
+            }
+          }
+        }
+      ],
+      "transparent": true,
+      "type": "logs"
+    }
+  ],
+  "refresh": "5s",
+  "schemaVersion": 39,
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": ".+",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_EVENTS}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "cluster",
+        "multi": true,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "label": "cluster",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_EVENTS}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "namespace",
+        "multi": true,
+        "name": "namespace",
+        "options": [],
+        "query": {
+          "label": "namespace",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".+",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_EVENTS}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "type",
+        "multi": true,
+        "name": "type",
+        "options": [],
+        "query": {
+          "label": "type",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".+",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_EVENTS}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "kind",
+        "multi": true,
+        "name": "kind",
+        "options": [],
+        "query": {
+          "label": "kind",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".+",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_EVENTS}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "reason",
+        "multi": true,
+        "name": "reason",
+        "options": [],
+        "query": {
+          "label": "reason",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "allValue": ".*",
+        "current": {},
+        "datasource": {
+          "type": "loki",
+          "uid": "${DS_WHIZARD_EVENTS}"
+        },
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "reported_by",
+        "multi": true,
+        "name": "reported_by",
+        "options": [],
+        "query": {
+          "label": "reported_by",
+          "refId": "LokiVariableQueryEditor-VariableQuery",
+          "stream": "",
+          "type": 1
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": ".*",
+          "value": ".*"
+        },
+        "hide": 0,
+        "label": "keyword",
+        "name": "keyword",
+        "options": [
+          {
+            "selected": true,
+            "text": ".*",
+            "value": ".*"
+          }
+        ],
+        "query": ".*",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "browser",
+  "title": "Whizard Events for KubeSphere",
+  "uid": "adnkgkrqx75dsc",
+  "version": 26,
+  "weekStart": ""
+}
