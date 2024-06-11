@@ -37,9 +37,9 @@ spec:
       {{- end }}
       securityContext:
         {{- toYaml .Values.enterprise.provisioner.securityContext | nindent 8 }}
-      {{- if .Values.imagePullSecrets }}
+      {{- if .Values.global.imagePullSecrets }}
       imagePullSecrets:
-      {{- range .Values.imagePullSecrets }}
+      {{- range .Values.global.imagePullSecrets }}
         - name: {{ . }}
       {{- end }}
       {{- end }}

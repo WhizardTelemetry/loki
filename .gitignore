@@ -3,7 +3,6 @@
 .pkg
 .cache
 *.output
-*.tgz
 *.exe
 __debug_bin
 requirements.lock
