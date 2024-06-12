@@ -371,27 +371,24 @@
         "type": "query"
       },
       {
-        "allValue": ".*",
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": ".*",
+          "value": ".*"
         },
         "hide": 0,
-        "includeAll": true,
         "label": "keyword",
-        "multi": true,
         "name": "keyword",
         "options": [
           {
             "selected": true,
-            "text": "All",
-            "value": "$__all"
+            "text": ".*",
+            "value": ".*"
           }
         ],
-        "query": "",
+        "query": ".*",
         "skipUrlSync": false,
-        "type": "custom"
+        "type": "textbox"
       }
     ]
   },
@@ -403,6 +400,6 @@
   "timezone": "browser",
   "title": "Whizard Notification for KubeSphere",
   "uid": "edo1kgu1a0jcwe",
-  "version": 4,
+  "version": 5,
   "weekStart": ""
 }

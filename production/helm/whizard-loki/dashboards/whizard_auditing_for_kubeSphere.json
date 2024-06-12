@@ -410,27 +410,24 @@
         "type": "query"
       },
       {
-        "allValue": ".*",
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": ".*",
+          "value": ".*"
         },
         "hide": 0,
-        "includeAll": true,
         "label": "keyword",
-        "multi": true,
         "name": "keyword",
         "options": [
           {
             "selected": true,
-            "text": "All",
-            "value": "$__all"
+            "text": ".*",
+            "value": ".*"
           }
         ],
-        "query": "",
+        "query": ".*",
         "skipUrlSync": false,
-        "type": "custom"
+        "type": "textbox"
       }
     ]
   },
@@ -442,6 +439,6 @@
   "timezone": "browser",
   "title": "Whizard Auditing for KubeSphere",
   "uid": "adnvfxx59i9z4a",
-  "version": 15,
+  "version": 16,
   "weekStart": ""
 }
