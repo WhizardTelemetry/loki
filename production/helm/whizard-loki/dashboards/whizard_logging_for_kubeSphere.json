@@ -369,20 +369,20 @@
       {
         "current": {
           "selected": false,
-          "text": ".*",
-          "value": ".*"
+          "text": "",
+          "value": ""
         },
         "hide": 0,
         "label": "keyword",
         "name": "keyword",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": ".*",
             "value": ".*"
           }
         ],
-        "query": ".*",
+        "query": "",
         "skipUrlSync": false,
         "type": "textbox"
       }
