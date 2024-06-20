@@ -26,6 +26,26 @@ loki:
     enabled: true
   querier:
     max_concurrent: 4
+  storage:
+    # Loki requires a bucket for chunks and the ruler. GEL requires a third bucket for the admin API.
+    # Please provide these values if you are using object storage.
+    bucketNames:
+      chunks: whizard-loki-chunks
+      ruler: whizard-loki-ruler
+      admin: whizard-loki-admin
+    type: s3
+    # Below S3 config will be enabled after setting `minio.enable` to false
+    s3:
+      endpoint: <your-s3-endpoint> # "s3.gd2.qingstor.com"
+      secretAccessKey: <your-s3-secret-access-key> # 'secret-access-key'
+      accessKeyId: <your-s3-access-key> # 'access-key'
+      s3ForcePathStyle: true
+      insecure: false
+      http_config:
+        idle_conn_timeout: 90s
+        response_header_timeout: 0s
+        insecure_skip_verify: false
+      backoff_config: {}
 gateway:
   verboseLogging: false
   service:
@@ -46,7 +66,7 @@ gateway:
 deploymentMode: SimpleScalable
 backend:
   affinity: {}
-  replicas: 2
+  replicas: 3 
   extraArgs:
     - -log.level=warn
   extraVolumeMounts:
@@ -57,16 +77,18 @@ backend:
       emptyDir: {}
 read:
   affinity: {}
-  replicas: 2
+  replicas: 3 
   extraArgs:
     - -querier.multi-tenant-queries-enabled=true
     - -log.level=warn
 write:
   affinity: {}
-  replicas: 2
+  replicas: 3 
   extraArgs:
     - -log.level=warn
 minio:
+  # Set minio.enable to false will not deploy minio or delete existing minio,
+  # and will store logs in buckets specified in `loki.storage.s3` instead
   enabled: true
   persistence:
     size: 20Gi
