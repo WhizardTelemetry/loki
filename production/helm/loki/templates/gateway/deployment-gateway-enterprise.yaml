@@ -46,9 +46,9 @@ spec:
         {{- toYaml .Values.enterpriseGateway.podSecurityContext | nindent 8 }}
       initContainers:
         {{- toYaml .Values.enterpriseGateway.initContainers | nindent 8 }}
-      {{- if .Values.imagePullSecrets }}
+      {{- if .Values.global.imagePullSecrets }}
       imagePullSecrets:
-      {{- range .Values.imagePullSecrets }}
+      {{- range .Values.global.imagePullSecrets }}
         - name: {{ . }}
       {{- end }}
       {{- end }}

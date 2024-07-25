@@ -160,7 +160,7 @@ Create the name of the service account to use
 Base template for building docker image reference
 */}}
 {{- define "loki.baseImage" }}
-{{- $registry := .global.registry | default .service.registry | default "" -}}
+{{- $registry := .global.imageRegistry | default .service.registry | default "" -}}
 {{- $repository := .service.repository | default "" -}}
 {{- $ref := ternary (printf ":%s" (.service.tag | default .defaultVersion | toString)) (printf "@%s" .service.digest) (empty .service.digest) -}}
 {{- if and $registry $repository -}}
@@ -174,7 +174,7 @@ Base template for building docker image reference
 Docker image name for Loki
 */}}
 {{- define "loki.lokiImage" -}}
-{{- $dict := dict "service" .Values.loki.image "global" .Values.global.image "defaultVersion" .Chart.AppVersion -}}
+{{- $dict := dict "service" .Values.loki.image "global" .Values.global "defaultVersion" .Chart.AppVersion -}}
 {{- include "loki.baseImage" $dict -}}
 {{- end -}}
 
@@ -182,7 +182,7 @@ Docker image name for Loki
 Docker image name for enterprise logs
 */}}
 {{- define "loki.enterpriseImage" -}}
-{{- $dict := dict "service" .Values.enterprise.image "global" .Values.global.image "defaultVersion" .Values.enterprise.version -}}
+{{- $dict := dict "service" .Values.enterprise.image "global" .Values.global "defaultVersion" .Values.enterprise.version -}}
 {{- include "loki.baseImage" $dict -}}
 {{- end -}}
 
@@ -197,7 +197,7 @@ Docker image name
 Docker image name for kubectl container
 */}}
 {{- define "loki.kubectlImage" -}}
-{{- $dict := dict "service" .Values.kubectlImage "global" .Values.global.image "defaultVersion" "latest" -}}
+{{- $dict := dict "service" .Values.kubectlImage "global" .Values.global "defaultVersion" "latest" -}}
 {{- include "loki.baseImage" $dict -}}
 {{- end -}}
 
@@ -557,7 +557,7 @@ configMap:
 Memcached Docker image
 */}}
 {{- define "loki.memcachedImage" -}}
-{{- $dict := dict "service" .Values.memcached.image "global" .Values.global.image -}}
+{{- $dict := dict "service" .Values.memcached.image "global" .Values.global -}}
 {{- include "loki.image" $dict -}}
 {{- end }}
 
@@ -565,7 +565,7 @@ Memcached Docker image
 Memcached Exporter Docker image
 */}}
 {{- define "loki.memcachedExporterImage" -}}
-{{- $dict := dict "service" .Values.memcachedExporter.image "global" .Values.global.image -}}
+{{- $dict := dict "service" .Values.memcachedExporter.image "global" .Values.global -}}
 {{- include "loki.image" $dict -}}
 {{- end }}
 

@@ -29,7 +29,7 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: {{ include "loki-canary.fullname" $ }}
-      {{- with $.Values.imagePullSecrets }}
+      {{- with $.Values.global.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
