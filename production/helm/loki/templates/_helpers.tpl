@@ -202,6 +202,14 @@ Docker image name for kubectl container
 {{- end -}}
 
 {{/*
+Docker image name for sidecar container
+*/}}
+{{- define "loki.sidecarImage" -}}
+{{- $dict := dict "service" .Values.sidecar.image "global" .Values.global "defaultVersion" .Values.sidecar.image.tag -}}
+{{- include "loki.baseImage" $dict -}}
+{{- end -}}
+
+{{/*
 Generated storage config for loki common config
 */}}
 {{- define "loki.commonStorageConfig" -}}
