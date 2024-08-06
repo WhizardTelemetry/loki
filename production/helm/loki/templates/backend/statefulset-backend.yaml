@@ -20,12 +20,7 @@ metadata:
   {{- end }}
 spec:
 {{- if not .Values.backend.autoscaling.enabled }}
-  {{- if eq .Values.deploymentMode "SingleBinary" }}
   replicas: 0
-  {{- else }}
-  replicas: {{ .Values.backend.replicas }}
-  {{- end }}
-{{- end }}
   podManagementPolicy: {{ .Values.backend.podManagementPolicy }}
   updateStrategy:
     rollingUpdate:
@@ -87,9 +82,9 @@ spec:
       {{- if .Values.sidecar.rules.enabled }}
         - name: loki-sc-rules
           {{- if .Values.sidecar.image.sha }}
-          image: "{{ .Values.sidecar.image.repository }}:{{ .Values.sidecar.image.tag }}@sha256:{{ .Values.sidecar.image.sha }}"
+          image: {{ include "loki.sidecarImage" . }}@sha256:{{ .Values.sidecar.image.sha }}
           {{- else }}
-          image: "{{ .Values.sidecar.image.repository }}:{{ .Values.sidecar.image.tag }}"
+          image: {{ include "loki.sidecarImage" . }}
           {{- end }}
           imagePullPolicy: {{ .Values.sidecar.image.pullPolicy }}
           env:
